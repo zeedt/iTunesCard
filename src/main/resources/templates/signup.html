@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-1.7.2.min.js" />
+</head>
+<body>
+    <div>
+        <div id="message">
+
+        </div>
+        <form method="post" id="signupform" action="javascript: signup()" >
+            <input name="firstname" placeholder="Enter firstname here" id="firstname" type="text" />
+            <input name="lastname" placeholder="Enter lastname here" id="lastname" type="text" />
+            <input name="username" placeholder="Enter username here" id="username" type="text" />
+            <input name="password" placeholder="Enter password here" id="password" type="password" />
+            <input name="bank" placeholder="Enter bank name" id="bank" type="type" />
+            <input name="accountnumber" placeholder="Enter accountnumber here" id="accountnumber" type="type" />
+            <input value="submit"  type="submit" />
+            <input type="hidden" id="signUpUserId" onclick="signUpUser(this.form)" />
+        </form>
+        <div>
+            <a href="/">Login</a>
+        </div>
+    </div>
+    <script src="login.js"> </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-1.7.2.min.js" />
+
+</head>
+<body>
+    <div>
+        <div id="message">
+
+        </div>
+        <form method="post" action="javascript: submit()" >
+            <input name="username" placeholder="Enter usernameee here" id="username" type="text" />
+            <input name="password" placeholder="Enter password here" id="password" type="password" />
+            <input value="submit"  type="submit" />
+            <input type="hidden" id="validateUserId" onclick="validateUser(this.form)" />
+        </form>
+        <a href="/usersignup">Sign up</a>
+    </div>
+
+    <script src="login.js"> </script>
+</body>
+
+
+</html>
