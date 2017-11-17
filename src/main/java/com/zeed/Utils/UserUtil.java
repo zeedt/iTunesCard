@@ -24,7 +24,6 @@ public class UserUtil {
         return user;
     }
     public User validateLogin(User user){
-        System.out.println("Username is "+user.username);
         User user1 = userRepositoy.findByUsername(user.username);
         if(user1!=null){
             System.out.println("I am here");

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
-public class UserRestController {
+public class UsersRestController {
     @Autowired
     UserUtil userUtil;
     @PostMapping("/validateUser")

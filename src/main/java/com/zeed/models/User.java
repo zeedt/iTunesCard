@@ -22,4 +22,6 @@ public class User {
     public String acctountNumber;
     @Transient
     public String message;
+    @Transient
+    public String token;
 }
