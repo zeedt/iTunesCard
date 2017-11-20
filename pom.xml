@@ -96,10 +96,15 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
-		<dependency>
-			<groupId>org.springframework.mobile</groupId>
-			<artifactId>spring-mobile-device</artifactId>
-		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.mobile</groupId>-->
+			<!--<artifactId>spring-mobile-device</artifactId>-->
+			<!--<version>1.1.5.RELEASE</version>-->
+		<!--</dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
+
+
 
 
 	</dependencies>
@@ -113,5 +118,7 @@
 		</plugins>
 	</build>
 
-
+	<beans>
+		<bean id="myService" class="com.zeed.controller.ControllerConfig"/>
+	</beans>
 </project>
