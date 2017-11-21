@@ -85,6 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/getPostResource").permitAll()
                 .antMatchers("/user").permitAll()
                 .antMatchers("/dashboard").permitAll()
+                .antMatchers("/uploadCard").permitAll()
                 .antMatchers("/usersignup").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()

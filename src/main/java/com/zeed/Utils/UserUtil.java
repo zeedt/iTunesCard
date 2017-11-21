@@ -3,6 +3,7 @@ package com.zeed.Utils;
 import com.zeed.models.User;
 import com.zeed.repository.UserRepositoy;
 import com.zeed.security.JwtTokenUtil;
+import com.zeed.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by longbridge on 11/14/17.
@@ -34,7 +36,7 @@ public class UserUtil {
         }
         return user;
     }
-    public User validateLogin(User user,Device device){
+    public User validateLogin(User user, Device device, HttpSession httpSession){
         User user1 = userRepositoy.findByUsername(user.username);
         if(user1!=null){
             System.out.println("I am here "+device);
@@ -47,6 +49,7 @@ public class UserUtil {
                 System.out.println("I am here 1");
                     user1.message = "User found";
                 user1.password = "";
+                httpSession.setAttribute("token",token);
                 return user1;
             }else{
                 System.out.println("I am here 22");
@@ -58,5 +61,19 @@ public class UserUtil {
             user.message = "Invalid username/password";
             return user;
         }
+    }
+    public String checkIfUserInSession(String token){
+        String username = jwtTokenUtil.getUsernameFromToken(token.replace("Bearer ",""));
+        if (token==null || token.equals("") || username==null){
+            return "home";
+        }else if(username!=null){
+            JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+            if(user!=null){
+                return "dashboard";
+            }else{
+                return "home";
+            }
+        }
+        return "home";
     }
 }
