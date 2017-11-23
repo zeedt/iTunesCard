@@ -33,7 +33,7 @@ function signUpUser(form){
         type: "POST",
         url:"/user/registerUser",
         contentType: "application/json; charset=utf-8",
-        data : JSON.stringify({username:form.username.value,password:form.password.value,bank:form.bank.value,
+        data : JSON.stringify({username:form.username.value,password:form.password.value,bank:form.bank.value,gender:form.gender.value,
             firstName:form.firstname.value,lastName:form.lastname.value,acctountNumber:form.accountnumber.value}),
         async:false,
         success : function (result) {

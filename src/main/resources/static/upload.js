@@ -14,13 +14,14 @@ function uploadform(form) {
         async:false,
         processData : false,
         contentType : false,
+        cache : false,
         success : function (result) {
-            console.log("Result "+JSON.stringify(result));
-            console.log("Message is "+result.message);
-            if (result.message=="Registration successfull"){
-                document.getElementById("signupform").reset();
+            if (result.status=="success"){
+                document.getElementById("uploadFormId").reset();
+                $("#uploadSMessage").html(result.message);
+            }else{
+                $("#uploadEMessage").html(result.message);
             }
-            $("#message").html(result.message);
         },
         error : function (error) {
             console.log("Error");

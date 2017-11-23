@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8" />
     <title>Title</title>
@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css" />
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.min.css" />
+    <link rel="stylesheet" href="custom.css" />
+    <script type="text/javascript" src="dashboardjs.js" />
+
 </head>
 <body>
-<div class="container">
+<div class="container" id="dashboardmarg">
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -19,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Dashboard<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/uploadCard">Upload</a>
@@ -27,14 +30,52 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Notification</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/userlogout">Logout</a>
+                </li>
             </ul>
         </div>
     </nav>
     <div class="row">
-        <div class="col-md-5">
-            Hello somebody
+        <div class="col-md-12" id="dashboardMargin">
+            <div class="col-lg-8 col-md-10 mx-auto" id="dashboardBody">
+                <h5 style="padding: 20px">Uploaded cards</h5>
+                <div class="card mb-3" th:each="card:${user.cards}" id="cardMargin">
+                    <div class="card-block">
+                        <h5 class="card-title">Card description</h5>
+                        <p class="card-text" th:text="${card.description}"></p>
+                        <p class="card-text"><small class="text-muted" th:text="|Updated on ${card.uploadedOn}"></small>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <small class="text-muted" th:text="|Status : ${card.status}"></small>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <small class="text-muted"><button th:onclick="'javascript : viewCard(\''+${card.filePath}+ '\');'" >View card</button></small></p>
+                    </div>
+                    <!--<img class="card-img-bottom" th:src="${card.filePath}" alt="Card image cap" />-->
+                <!--<img class="card-img-bottom" src="#####">-->
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="viewCardModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Card image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="myInput">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

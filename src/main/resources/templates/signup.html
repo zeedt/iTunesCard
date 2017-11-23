@@ -15,10 +15,10 @@
     <div class="row">
     <div class="col-lg-5 col-md-6 mx-auto">
         <div class="panel panel-default" id="loginContainer">
-            <div class="panel-heading">
-                <h3>Card Upload Signup</h3>
+            <div class="panel-heading" id="signupheader">
+                <h4>Card Upload Signup&nbsp;&nbsp;</h4> <a href="/">Login</a>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" id="signupbody">
         <div id="message" class="row">
 
         </div>
@@ -36,6 +36,13 @@
             <input name="password" class="form-control " placeholder="Enter password here" id="password" type="password" />
             </div>
                 <div class="form-group"  >
+                    <select name="gender" class="form-control" id="gender">
+                        <option value="">--Select gender---</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+                <div class="form-group"  >
                     <select name="bank" class="form-control" id="bank">
                         <option value="">--Select bank---</option>
                         <option value="GTB">GTB</option>
@@ -48,13 +55,12 @@
             <div class="form-group">
             <input name="accountnumber" class="form-control " placeholder="Enter accountnumber here" id="accountnumber" type="type" />
             </div>
-            <input value="submit"  type="submit" />
-            <input type="hidden" id="signUpUserId" onclick="signUpUser(this.form)" />
+            <input value="submit" class="btn btn-primary btn-md" type="submit" />
+            <input type="hidden" class="btn btn-primary btn-md" id="signUpUserId" onclick="signUpUser(this.form)" />
         </form>
             </div>
             </div>
         <div>
-            <a href="/">Login</a>
         </div>
     </div>
     </div>

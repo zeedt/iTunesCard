@@ -1,6 +1,8 @@
 package com.zeed.Utils;
 
+import com.zeed.models.Role;
 import com.zeed.models.User;
+import com.zeed.repository.CardsRepository;
 import com.zeed.repository.UserRepositoy;
 import com.zeed.security.JwtTokenUtil;
 import com.zeed.security.JwtUser;
@@ -10,8 +12,6 @@ import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -29,6 +29,7 @@ public class UserUtil {
         User user1 = userRepositoy.findByUsername(user.username);
         if(user1==null){
             user.password = Hash.createPassword(user.password);
+            user.role = Role.USER;
             userRepositoy.save(user);
             user.message = "Registration successfull";
         }else{
@@ -39,20 +40,15 @@ public class UserUtil {
     public User validateLogin(User user, Device device, HttpSession httpSession){
         User user1 = userRepositoy.findByUsername(user.username);
         if(user1!=null){
-            System.out.println("I am here "+device);
+            user1.cards.forEach(card->card.user=null);
             if(Hash.checkPassword(user.password,user1.password)){
                 final UserDetails userDetails = userDetailsService.loadUserByUsername(user.username);
-                System.out.println("userdetails is "+userDetails.toString());
-//                Device currentDevice = DeviceUtils.getCurrentDevice(servletRequest);
                 final String token = jwtTokenUtil.generateToken(userDetails, device);
-                System.out.println("Token is "+token);
-                System.out.println("I am here 1");
                     user1.message = "User found";
                 user1.password = "";
                 httpSession.setAttribute("token",token);
                 return user1;
             }else{
-                System.out.println("I am here 22");
                 user1.password = "";
                 user1.message = "Invalid username/password";
                 return user1;
@@ -75,5 +71,19 @@ public class UserUtil {
             }
         }
         return "home";
+    }
+    public User returnUser(String token){
+        String username = jwtTokenUtil.getUsernameFromToken(token.replace("Bearer ",""));
+        if (token==null || token.equals("") || username==null){
+            return null;
+        }else if(username!=null){
+            JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+            if(user!=null){
+                return userRepositoy.findByUsername(user.getUsername());
+            }else{
+                return null;
+            }
+        }
+        return null;
     }
 }

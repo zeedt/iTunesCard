@@ -5,8 +5,36 @@
     padding-top : 10%
 }
 #uploadpad  {
-    padding-top : 10%
+    margin-top : 15px
+}
+#dashboardmarg  {
+    margin-top : 15px
 }
 #uploadpadMargin  {
-    margin-top: 5%;
+    margin-top: 10px;
+}
+#dashboardMargin  {
+    margin-top: 10px;
+}
+#signupheader {
+    padding:10px;background-color:#e8e8e8
+}
+#signupbody {
+    padding:10px;background-color:#e8e8e8
+}
+#signinheader {
+    padding:10px;background-color:#e8e8e8
+}
+#signinbody {
+    padding:10px;background-color:#e8e8e8
+}
+#uploadFormBody {
+    padding:30px;background-color:#e8e8e8
+}
+#dashboardBody {
+    padding:0px;
+    background-color:#e8e8e8
+}
+#cardMargin {
+    padding:20px;
 }
