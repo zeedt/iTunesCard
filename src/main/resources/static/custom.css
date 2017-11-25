@@ -36,5 +36,51 @@
     background-color:#e8e8e8
 }
 #cardMargin {
-    padding:20px;
+    /*padding:20px;*/
+}
+#declineBox {
+    margin-top:10px;
+}
+#message {
+    padding-left: 20px;
+    color : #5cb3fd;
+}
+#declineMessage {
+    margin-bottom: 10px;
+    color : green;
+}
+#admdeclineMessage {
+    margin-bottom: 10px;
+    color : green;
+}
+#decResCardImg {
+    margin-bottom: 10px;
+    color : red;
+}
+.span {
+    color: red;
+}
+.tableLabel {
+    font-weight: bold;
+}
+.hrefButton {
+    background-color: white;
+    border: 0px;
+}
+#dashboardMargin2 {
+    margin-top: 15px;
+}
+#dashboardBody2 {
+    margin: 20px;
+    padding-bottom: 20px;
+    background-color:#e8e8e8
+}
+#updateMessage {
+    padding-left : 20px;
+}
+.table td, .table th {
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
 }

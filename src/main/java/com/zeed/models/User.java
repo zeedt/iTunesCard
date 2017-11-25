@@ -19,10 +19,11 @@ public class User {
     public String username;
     public String firstName;
     public String lastName;
+    public String email;
     public String gender;
     public String password;
     public String bank;
-    public String acctountNumber;
+    public String accountNumber;
     @Enumerated(EnumType.STRING)
     public Role role;
     @Transient

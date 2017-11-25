@@ -23,6 +23,8 @@ public class Cards {
     public String comment;
     @Enumerated(EnumType.STRING)
     public Status status;
+    @Lob
+    public String declinedImage;
     public Cards(String description, String amount, String filePath, User user,Date uploadedOn,Date verifiedOn,Status status) {
         this.description = description;
         this.amount = amount;

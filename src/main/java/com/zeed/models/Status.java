@@ -6,5 +6,5 @@ package com.zeed.models;
 public enum Status {
     PENDING,
     VERIFIED,
-    VERUFICATION_DECLINED
+    VERIFICATION_DECLINED
 }

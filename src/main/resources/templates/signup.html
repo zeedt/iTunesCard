@@ -25,15 +25,23 @@
         <form method="post" id="signupform" action="javascript: signup()" >
             <div class="form-group">
             <input name="firstname" class="form-control" placeholder="Enter firstname here" id="firstname" type="text" />
+                <span class="span"><small><p style="padding-left:10px" id="firstM"></p></small></span>
             </div>
             <div class="form-group">
             <input name="lastname" class="form-control " placeholder="Enter lastname here" id="lastname" type="text" />
+                <span class="span"><small><p style="padding-left:10px" id="lastM"></p></small></span>
+            </div>
+            <div class="form-group">
+            <input name="email" class="form-control " placeholder="Enter email address here" id="email" type="text" />
+                <span class="span"><small><p style="padding-left:10px" id="emailM"></p></small></span>
             </div>
                 <div class="form-group">
                 <input name="username" class="form-control" placeholder="Enter username here" id="username" type="text" />
+                    <span class="span"><small><p style="padding-left:10px" id="userM"></p></small></span>
                 </div>
             <div class="form-group">
             <input name="password" class="form-control " placeholder="Enter password here" id="password" type="password" />
+                <span class="span"><small><p style="padding-left:10px"  id="passM"></p></small></span>
             </div>
                 <div class="form-group"  >
                     <select name="gender" class="form-control" id="gender">
@@ -41,6 +49,7 @@
                         <option value="M">Male</option>
                         <option value="F">Female</option>
                     </select>
+                    <span class="span"><small><p style="padding-left:10px" id="genM"></p></small></span>
                 </div>
                 <div class="form-group"  >
                     <select name="bank" class="form-control" id="bank">
@@ -51,9 +60,11 @@
                         <option value="UBA">UBA</option>
                         <option value="ZENITH">ZENITH</option>
                     </select>
+                    <span class="span"><small><p style="padding-left:10px" id="bankM"></p></small></span>
                 </div>
             <div class="form-group">
-            <input name="accountnumber" class="form-control " placeholder="Enter accountnumber here" id="accountnumber" type="type" />
+            <input name="accountNumber" class="form-control " placeholder="Enter accountNumber here" id="accountnumber" type="type" />
+                <span class="span"><small><p style="padding-left:10px" id="accountM"></p></small></span>
             </div>
             <input value="submit" class="btn btn-primary btn-md" type="submit" />
             <input type="hidden" class="btn btn-primary btn-md" id="signUpUserId" onclick="signUpUser(this.form)" />
