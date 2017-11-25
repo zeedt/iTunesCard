@@ -93,6 +93,7 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
+			<version>0.8.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
