@@ -118,8 +118,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<beans>
-		<bean id="myService" class="com.zeed.controller.ControllerConfig"/>
-	</beans>
+<!--i removed beans tag hrer-->
 </project>
