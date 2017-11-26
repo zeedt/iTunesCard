@@ -93,16 +93,23 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>0.8.0</version>
+			<!--<version>0.8.0</version>-->
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
+		<!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
 		<!--<dependency>-->
-			<!--<groupId>org.springframework.mobile</groupId>-->
-			<!--<artifactId>spring-mobile-device</artifactId>-->
-			<!--<version>1.1.5.RELEASE</version>-->
+			<!--<groupId>org.mindrot</groupId>-->
+			<!--<artifactId>jbcrypt</artifactId>-->
+			<!--<version>0.3m</version>-->
 		<!--</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
+		<dependency>
+			<groupId>org.springframework.mobile</groupId>
+			<artifactId>spring-mobile-device</artifactId>
+			<version>1.1.5.RELEASE</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.mobile/spring-mobile-device -->
 
 
@@ -118,7 +125,7 @@
 			</plugin>
 		</plugins>
 	</build>
-
+<!--i removed beans tag hrer-->
 	<beans>
 		<bean id="myService" class="com.zeed.controller.ControllerConfig"/>
 	</beans>

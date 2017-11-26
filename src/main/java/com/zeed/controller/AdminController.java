@@ -127,7 +127,7 @@ public class AdminController {
     @RequestMapping(method=RequestMethod.GET, value = "/adminlogout")
     public String logout(HttpSession httpSession){
         httpSession.setAttribute("admintoken","");
-        return "home";
+        return "adminHome";
     }
     @RequestMapping(method=RequestMethod.GET, value = "/userEnquiry")
     public String userEnquiry(HttpSession httpSession){
