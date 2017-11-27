@@ -53,12 +53,14 @@ public class UsersRestController {
         return user;
     }
 
+    //Not needed at the moment.
+    /*
     @PostMapping("/registerAdminUser")
     public Object signUpAdminUser(@RequestBody User userObject) throws Exception {
         User user = userUtil.registerAdminUser(userObject);
         return user;
     }
-
+    */
     @PostMapping("/getUserDetails")
     public Object getUserDetails(){
 
@@ -71,16 +73,18 @@ public class UsersRestController {
         try {
             String filePath = "cardsUpload/card_"+(new Date()).getTime()+".png";
             User user = userUtil.returnUser(httpSession.getAttribute("token").toString());
-            Cards cards = new Cards(desc,amount,filePath,user,new Date(),null, Status.PENDING);
-            cards = cardService.addCards(cards,uploadfile.getBytes());
-            if (cards != null) {
-                response.put("status","success");
-                response.put("message","Upload successful... Kindly wait for verification");
-            }else{
-                response.put("status","failure");
-                response.put("message","Error in upload... Kindly retry or contact us");
+            if(user!=null){
+                Cards cards = new Cards(desc, amount, filePath, user, new Date(), null, Status.PENDING);
+                cards = cardService.addCards(cards, uploadfile.getBytes());
+                if (cards != null) {
+                    response.put("status", "success");
+                    response.put("message", "Upload successful... Kindly wait for verification");
+                } else {
+                    response.put("status", "failure");
+                    response.put("message", "Error in upload... Kindly retry or contact us");
+                }
+                return response;
             }
-            return response;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

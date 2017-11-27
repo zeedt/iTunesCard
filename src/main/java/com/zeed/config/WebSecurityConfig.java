@@ -97,7 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profileModal").permitAll()
                 .antMatchers("/userEnquiry").permitAll()
                 .antMatchers("/adminHome").permitAll()
-                .antMatchers("/adminsignup").permitAll()
+//                .antMatchers("/adminsignup").permitAll()
                 .antMatchers("/userlogout").permitAll()
                 .antMatchers("/uploadCard").permitAll()
                 .antMatchers("/usersignup").permitAll()
