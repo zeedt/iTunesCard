@@ -49,6 +49,9 @@ public class AdminController {
         String resp = userUtil.checkIfAdminUserInSession(token);
         if(user!=null){
             List<Cards> cardsList = cardService.pendingCards();
+            if(cardsList.size()>0){model.addAttribute("last",cardsList.get(cardsList.size()-1).id);}else{
+                model.addAttribute("last",0);
+            }
             Collections.reverse(cardsList);
             model.addAttribute("user",user.username);
             model.addAttribute("usercard",cardsList);
@@ -71,7 +74,9 @@ public class AdminController {
         String resp =  userUtil.checkIfAdminUserInSession(token);
         if(user!=null){
             List<Cards> cardsList = cardService.pendingCards();
-            model.addAttribute("last",cardsList.get(cardsList.size()-1).id);
+            if(cardsList.size()>0){model.addAttribute("last",cardsList.get(cardsList.size()-1).id);}else{
+                model.addAttribute("last",0);
+            }
             Collections.reverse(cardsList);
             model.addAttribute("user",user.username);
             model.addAttribute("role",user.role);
