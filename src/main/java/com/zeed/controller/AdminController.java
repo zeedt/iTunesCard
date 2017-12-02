@@ -71,6 +71,7 @@ public class AdminController {
         String resp =  userUtil.checkIfAdminUserInSession(token);
         if(user!=null){
             List<Cards> cardsList = cardService.pendingCards();
+            model.addAttribute("last",cardsList.get(cardsList.size()-1).id);
             Collections.reverse(cardsList);
             model.addAttribute("user",user.username);
             model.addAttribute("role",user.role);

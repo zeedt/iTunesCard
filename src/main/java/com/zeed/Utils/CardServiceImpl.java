@@ -30,10 +30,6 @@ public class CardServiceImpl implements CardService{
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("data:image/png;base64,");
             stringBuilder.append(StringUtils.newStringUtf8(Base64.encodeBase64(bytes,false)));
-//            FileOutputStream fileOutputStream = new FileOutputStream(cards.filePath);
-//            fileOutputStream.write(bytes);
-//            fileOutputStream.flush();
-//            fileOutputStream.close();
             cards.filePath = stringBuilder.toString();
             cardsRepository.save(cards);
             cards.user.cards.add(cards);
