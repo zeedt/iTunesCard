@@ -13,4 +13,5 @@ public interface CardService {
    public String verifyCard(Long id, String user);
    public List<Cards> pendingCards();
    public void logSomething();
+   public List<Cards> getUpdateCards(Long last);
 }

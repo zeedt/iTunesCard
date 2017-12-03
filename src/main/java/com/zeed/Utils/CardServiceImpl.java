@@ -84,4 +84,10 @@ public class CardServiceImpl implements CardService{
         System.out.println("I am the log something service");
 
     }
+
+    @Override
+    public List<Cards> getUpdateCards(Long last) {
+        List<Cards> cardsList = cardsRepository.findCardsByIdGreaterThan(last);
+        return cardsList;
+    }
 }

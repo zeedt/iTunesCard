@@ -71,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         HttpMethod.GET,
                         "/",
                         "/*.html",
+                        "/*.ogg",
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
@@ -98,6 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profileModal").permitAll()
                 .antMatchers("/userEnquiry").permitAll()
                 .antMatchers("/adminHome").permitAll()
+                .antMatchers("/updateDashB").permitAll()
 //                .antMatchers("/adminsignup").permitAll()
                 .antMatchers("/userlogout").permitAll()
                 .antMatchers("/uploadCard").permitAll()
