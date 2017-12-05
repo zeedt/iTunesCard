@@ -109,4 +109,6 @@ public class User {
         this.lastPasswordResetDate = lastPasswordResetDate;
         this.authorities = authorities;
     }
+
+
 }

@@ -16,4 +16,5 @@ public interface CardsRepository extends JpaRepository<Cards,Long>{
     List<Cards> findCardsByUserOrderByUploadedOnDesc(User user);
     List<Cards> findCardsByStatus(Status status);
     Cards findCardsById(Long id);
+    List<Cards> findCardsByIdGreaterThan(Long last);
 }

@@ -71,10 +71,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         HttpMethod.GET,
                         "/",
                         "/*.html",
+                        "/*.ogg",
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js",
+                        "/font-awesome-4.7.0 2/**",
                         "https://132.10.200.52:7200/fiwebservice/FIWebService",
                         "/images/**",
                         "/swagger-ui.html"
@@ -97,7 +99,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profileModal").permitAll()
                 .antMatchers("/userEnquiry").permitAll()
                 .antMatchers("/adminHome").permitAll()
-                .antMatchers("/adminsignup").permitAll()
+                .antMatchers("/updateDashB").permitAll()
+//                .antMatchers("/adminsignup").permitAll()
                 .antMatchers("/userlogout").permitAll()
                 .antMatchers("/uploadCard").permitAll()
                 .antMatchers("/usersignup").permitAll()

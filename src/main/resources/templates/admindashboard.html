@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="custom.css" />
     <script type="text/javascript" src="dashboardjs.js" />
     <script type="text/javascript" src="admin.js" />
+    <script type="text/javascript" src="reloadAdmindash.js" />
 
 </head>
 <body>
@@ -34,11 +35,15 @@
             </ul>
         </div>
     </nav>
+    <audio id="myaudio" src="hangouts_message.ogg" autostart="false" autoplay="false" ></audio>
+    <!--<input th:value="${last}" type="hidden" id="lastFetched" />-->
+    <div id="outerHold" style="visibility: hidden"><div id="lastFetched" th:text="${last}"></div></div>
     <div class="row">
         <div class="col-md-12" id="dashboardMargin">
             <div class="col-lg-8 col-md-10 mx-auto" id="dashboardBody">
                 <h5 style="padding: 20px">Pending verification cards</h5>
-                <div class="card mb-3" th:each="card:${usercard}" id="cardMargin">
+                <div id="CardDetails" >
+                <div class="card mb-3 cardMargin" th:each="card:${usercard}" >
                     <div class="card-block">
                         <h6 class="card-title">Card description
                             &nbsp;&nbsp;&nbsp;&nbsp;<small class="text-muted" th:text="|Amount : ${card.amount}"></small>
@@ -56,51 +61,10 @@
                     <!--<img class="card-img-bottom" src="#####">-->
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </div>
-
-
-
-
-<!--<div class="modal fade" id="viewCardModal">-->
-    <!--<div class="modal-dialog" role="document">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<h5 class="modal-title">Card image</h5>-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-                    <!--<span aria-hidden="true">&times;</span>-->
-                <!--</button>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--<div id="myInput">-->
-
-                <!--</div>-->
-                <!--<div id="declineBox">-->
-                    <!--<div id="declineMessage">-->
-
-                    <!--</div>-->
-                    <!--<form method="post" action="javascript: triggerSubmission()" id="declineFormId" enctype="multipart/form-data">-->
-                    <!--<div class="form-group">-->
-                        <!--<textarea name="declineReason" class="form-control" placeholder="Enter description here" id="declineReason" type="text"></textarea>-->
-                    <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<input name="itunescardDecline" class="form-control-file" placeholder="" id="itunescard" type="file" />-->
-                        <!--</div>-->
-                        <!--<input type="hidden" id="declineformbutton" onclick="declineform(this.form)" />-->
-                    <!--</form>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<div id="verDecButtons">-->
-                <!--<button type="button" class="btn btn-primary" onclick="verifyCard()">Verify</button>-->
-                <!--<button type="button" class="btn btn-danger"  onclick="declineCard()">Decline</button>-->
-                <!--</div>-->
-                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 
 <div class="modal fade" id="verdeclineCardModal">
     <div class="modal-dialog" role="document">

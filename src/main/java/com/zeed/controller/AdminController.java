@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -49,6 +47,9 @@ public class AdminController {
         String resp = userUtil.checkIfAdminUserInSession(token);
         if(user!=null){
             List<Cards> cardsList = cardService.pendingCards();
+            if(cardsList.size()>0){model.addAttribute("last",cardsList.get(cardsList.size()-1).id);}else{
+                model.addAttribute("last",0);
+            }
             Collections.reverse(cardsList);
             model.addAttribute("user",user.username);
             model.addAttribute("usercard",cardsList);
@@ -71,6 +72,9 @@ public class AdminController {
         String resp =  userUtil.checkIfAdminUserInSession(token);
         if(user!=null){
             List<Cards> cardsList = cardService.pendingCards();
+            if(cardsList.size()>0){model.addAttribute("last",cardsList.get(cardsList.size()-1).id);}else{
+                model.addAttribute("last",0);
+            }
             Collections.reverse(cardsList);
             model.addAttribute("user",user.username);
             model.addAttribute("role",user.role);
@@ -159,6 +163,33 @@ public class AdminController {
         if(user1!=null && user!=null){
             modelAndView.addObject("carduser",user1);
             return modelAndView;
+        }
+        return null;
+    }
+    @RequestMapping(method = RequestMethod.POST,value = "/updateDashB")
+    public ModelAndView updateDashB(HttpSession httpSession,@RequestBody Map<String,String> data){
+        User user = null;
+        String token = "";
+        if (httpSession.getAttribute("admintoken")!=null) {
+            token = httpSession.getAttribute("admintoken").toString();
+            user = userUtil.returnAdminUser(token);
+        }
+        try{
+            if(user!=null){
+                List<Cards> cardsList = cardService.getUpdateCards(Long.valueOf(data.get("last")));
+                System.out.println("Card size is "+cardsList.size());
+                ModelAndView modelAndView = new ModelAndView();
+                modelAndView.setViewName("appendupdate");
+                if(cardsList.size()>0) {
+                    modelAndView.addObject("usercard", cardsList);
+                    modelAndView.addObject("last", cardsList.get(cardsList.size()-1).id);
+                    return modelAndView;
+                }else{
+                    return null;
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
         return null;
     }
