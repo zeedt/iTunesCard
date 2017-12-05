@@ -1,5 +1,6 @@
 package com.zeed.Utils;
 
+import com.zeed.models.Cardgroup;
 import com.zeed.models.Cards;
 import com.zeed.models.Status;
 import com.zeed.repository.CardsRepository;
@@ -9,6 +10,7 @@ import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,18 +27,25 @@ public class CardServiceImpl implements CardService{
     @Autowired
     UserRepositoy userRepositoy;
     @Override
-    public Cards addCards(Cards cards,byte[] bytes) {
+    public Cards addCards(Cards cards, MultipartFile bytes, Cardgroup cardgroup) {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("data:image/png;base64,");
-            stringBuilder.append(StringUtils.newStringUtf8(Base64.encodeBase64(bytes,false)));
+            stringBuilder.append(StringUtils.newStringUtf8(Base64.encodeBase64(bytes.getBytes(),false)));
             cards.filePath = stringBuilder.toString();
+            cards.cardgroup = cardgroup;
             cardsRepository.save(cards);
-            cards.user.cards.add(cards);
-            userRepositoy.save(cards.user);
             return cards;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Cards addMultipleCards(Cards cards, MultipartFile[] multipart) {
+        for (MultipartFile multipartFile:multipart){
+
         }
         return null;
     }

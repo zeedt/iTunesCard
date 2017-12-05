@@ -17,6 +17,8 @@ public class Cards {
     public String filePath;
     @ManyToOne
     public User user;
+    @ManyToOne
+    public Cardgroup cardgroup;
     public Date uploadedOn;
     public Date verifiedOn;
     @Lob

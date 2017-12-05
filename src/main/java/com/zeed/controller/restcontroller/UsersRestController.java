@@ -3,9 +3,11 @@ package com.zeed.controller.restcontroller;
 import com.zeed.Utils.CardService;
 import com.zeed.Utils.Hash;
 import com.zeed.Utils.UserUtil;
+import com.zeed.models.Cardgroup;
 import com.zeed.models.Cards;
 import com.zeed.models.Status;
 import com.zeed.models.User;
+import com.zeed.repository.CardgroupRepository;
 import com.zeed.repository.CardsRepository;
 import com.zeed.repository.UserRepositoy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -36,6 +39,8 @@ public class UsersRestController {
 
     @Autowired
     CardsRepository cardsRepository;
+    @Autowired
+    CardgroupRepository cardgroupRepository;
     @Autowired
     UserRepositoy userRepositoy;
 
@@ -67,28 +72,35 @@ public class UsersRestController {
         return null;
     }
     @PostMapping("/uploadCard")
-    public Object uploadCard(@RequestParam("itunescard") MultipartFile uploadfile,@RequestParam("desc") String desc,
+    public Object uploadCard(@RequestParam("itunescard") MultipartFile[] uploadfile,@RequestParam("desc") String desc,
                              @RequestParam("amount") String amount,HttpSession httpSession){
         HashMap<String,String> response = new HashMap<>();
-        try {
-            String filePath = "cardsUpload/card_"+(new Date()).getTime()+".png";
-            User user = userUtil.returnUser(httpSession.getAttribute("token").toString());
-            if(user!=null){
-                Cards cards = new Cards(desc, amount, filePath, user, new Date(), null, Status.PENDING);
-                cards = cardService.addCards(cards, uploadfile.getBytes());
-                if (cards != null) {
-                    response.put("status", "success");
-                    response.put("message", "Upload successful... Kindly wait for verification");
-                } else {
-                    response.put("status", "failure");
-                    response.put("message", "Error in upload... Kindly retry or contact us");
-                }
-                return response;
+        String filePath = "cardsUpload/card_"+(new Date()).getTime()+".png";
+        System.out.println("Number of records is "+uploadfile.length);
+        User user = userUtil.returnUser(httpSession.getAttribute("token").toString());
+        int c = 0;
+        Date date = new Date();
+        if(user!=null){
+            Cardgroup cardgroup = new Cardgroup();
+            ArrayList<Cards> cardsArrayList = new ArrayList<>();
+            cardgroup.cardsList = cardsArrayList;
+            cardgroupRepository.save(cardgroup);
+            for(MultipartFile multipartFile:uploadfile){
+                Cards cards = new Cards(desc, amount, filePath, user, date, null, Status.PENDING);
+                cards = cardService.addCards(cards, multipartFile,cardgroup);
+                if(cards.id!=null){
+                    c++;
+                    cardgroup.cardsList.add(cards);
+                };
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (c==uploadfile.length) {
+                response.put("status", "success");
+                response.put("message", "Upload successful... Kindly wait for verification");
+            } else {
+                response.put("status", "failure");
+                response.put("message", "Error in upload... Some files may not be uploaded. Kindly retry or contact us");
+            }
+            return response;
         }
         response.put("status","failure");
         return response;
