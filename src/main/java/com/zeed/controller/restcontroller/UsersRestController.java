@@ -1,12 +1,10 @@
 package com.zeed.controller.restcontroller;
 
-import com.zeed.Utils.CardService;
+import com.zeed.Utils.services.CardService;
 import com.zeed.Utils.Hash;
 import com.zeed.Utils.UserUtil;
-import com.zeed.models.Cardgroup;
-import com.zeed.models.Cards;
-import com.zeed.models.Status;
-import com.zeed.models.User;
+import com.zeed.Utils.services.DeclineMessageService;
+import com.zeed.models.*;
 import com.zeed.repository.CardgroupRepository;
 import com.zeed.repository.CardsRepository;
 import com.zeed.repository.UserRepositoy;
@@ -15,12 +13,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,15 +36,19 @@ public class UsersRestController {
     CardgroupRepository cardgroupRepository;
     @Autowired
     UserRepositoy userRepositoy;
+    @Autowired
+    DeclineMessageService declineMessageService;
 
     @PostMapping("/validateUser")
-    public Object validateUser(@RequestBody User user, Device device, HttpSession httpSession){
-        return userUtil.validateLogin(user, device,httpSession);
+    public Object validateUser(@RequestBody User user, Device device, HttpSession httpSession) {
+        return userUtil.validateLogin(user, device, httpSession);
     }
+
     @PostMapping("/validateAdminUser")
-    public Object validateAdminUser(@RequestBody User user, Device device, HttpSession httpSession){
-        return userUtil.validateAdminUser(user, device,httpSession);
+    public Object validateAdminUser(@RequestBody User user, Device device, HttpSession httpSession) {
+        return userUtil.validateAdminUser(user, device, httpSession);
     }
+
     @PostMapping("/registerUser")
     public Object signUpUser(@RequestBody User userObject) throws Exception {
         User user = userUtil.registerUser(userObject);
@@ -67,33 +64,35 @@ public class UsersRestController {
     }
     */
     @PostMapping("/getUserDetails")
-    public Object getUserDetails(){
+    public Object getUserDetails() {
 
         return null;
     }
+
     @PostMapping("/uploadCard")
-    public Object uploadCard(@RequestParam("itunescard") MultipartFile[] uploadfile,@RequestParam("desc") String desc,
-                             @RequestParam("amount") String amount,HttpSession httpSession){
-        HashMap<String,String> response = new HashMap<>();
-        String filePath = "cardsUpload/card_"+(new Date()).getTime()+".png";
-        System.out.println("Number of records is "+uploadfile.length);
+    public Object uploadCard(@RequestParam("itunescard") MultipartFile[] uploadfile, @RequestParam("desc") String desc,
+                             @RequestParam("amount") String amount, HttpSession httpSession) {
+        HashMap<String, String> response = new HashMap<>();
+        String filePath = "cardsUpload/card_" + (new Date()).getTime() + ".png";
+        System.out.println("Number of records is " + uploadfile.length);
         User user = userUtil.returnUser(httpSession.getAttribute("token").toString());
         int c = 0;
         Date date = new Date();
-        if(user!=null){
+        if (user != null) {
             Cardgroup cardgroup = new Cardgroup();
             ArrayList<Cards> cardsArrayList = new ArrayList<>();
             cardgroup.cardsList = cardsArrayList;
             cardgroupRepository.save(cardgroup);
-            for(MultipartFile multipartFile:uploadfile){
+            for (MultipartFile multipartFile : uploadfile) {
                 Cards cards = new Cards(desc, amount, filePath, user, date, null, Status.PENDING);
-                cards = cardService.addCards(cards, multipartFile,cardgroup);
-                if(cards.id!=null){
+                cards = cardService.addCards(cards, multipartFile, cardgroup);
+                if (cards.id != null) {
                     c++;
                     cardgroup.cardsList.add(cards);
-                };
+                }
+                ;
             }
-            if (c==uploadfile.length) {
+            if (c == uploadfile.length) {
                 response.put("status", "success");
                 response.put("message", "Upload successful... Kindly wait for verification");
             } else {
@@ -102,15 +101,16 @@ public class UsersRestController {
             }
             return response;
         }
-        response.put("status","failure");
+        response.put("status", "failure");
         return response;
     }
+
     @PostMapping("/updateProfileDetails")
-    public Object updateProfileDetails(@RequestBody HashMap<String,String> data,HttpSession httpSession){
-        HashMap<String,String> response = new HashMap<>();
+    public Object updateProfileDetails(@RequestBody HashMap<String, String> data, HttpSession httpSession) {
+        HashMap<String, String> response = new HashMap<>();
         try {
             User user = userUtil.returnUser(httpSession.getAttribute("token").toString());
-            if (user!=null) {
+            if (user != null) {
                 user.gender = data.get("gender");
                 user.accountNumber = data.get("accountNumber");
                 user.lastName = data.get("lastName");
@@ -118,45 +118,56 @@ public class UsersRestController {
                 user.bank = data.get("bank");
                 user.email = data.get("email");
                 userRepositoy.save(user);
-                response.put("status","success");
-                response.put("message","Profile Update successful.");
-            }else{
-                response.put("status","failure");
-                response.put("message","Error in profile update... Kindly retry or contact us");
+                response.put("status", "success");
+                response.put("message", "Profile Update successful.");
+            } else {
+                response.put("status", "failure");
+                response.put("message", "Error in profile update... Kindly retry or contact us");
             }
             return response;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.put("status","failure");
-        response.put("message","Error in upload... Kindly retry or contact us");
+        response.put("status", "failure");
+        response.put("message", "Error in upload... Kindly retry or contact us");
         return response;
     }
+
     @PostMapping("/updatePasswordDetails")
-    public Object updatePasswordDetails(@RequestBody HashMap<String,String> data,HttpSession httpSession){
-        HashMap<String,String> response = new HashMap<>();
+    public Object updatePasswordDetails(@RequestBody HashMap<String, String> data, HttpSession httpSession) {
+        HashMap<String, String> response = new HashMap<>();
         try {
             User user = userUtil.returnUser(httpSession.getAttribute("token").toString());
-            if (user!=null) {
-                if(Hash.checkPassword(data.get("oldpassword"),user.password)){
+            if (user != null) {
+                if (Hash.checkPassword(data.get("oldpassword"), user.password)) {
                     user.password = Hash.createPassword(data.get("newpassword"));
                     userRepositoy.save(user);
-                    response.put("status","success");
-                    response.put("message","Password Update successful.");
-                }else{
-                    response.put("status","success");
-                    response.put("message","Current password not correct.");
+                    response.put("status", "success");
+                    response.put("message", "Password Update successful.");
+                } else {
+                    response.put("status", "success");
+                    response.put("message", "Current password not correct.");
                 }
-            }else{
-                response.put("status","failure");
-                response.put("message","Error in password update... Kindly retry or contact us");
+            } else {
+                response.put("status", "failure");
+                response.put("message", "Error in password update... Kindly retry or contact us");
             }
             return response;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.put("status","failure");
-        response.put("message","Error in upload... Kindly retry or contact us");
+        response.put("status", "failure");
+        response.put("message", "Error in upload... Kindly retry or contact us");
         return response;
+    }
+
+    @PostMapping(value = "/postMessage")
+    public String postMessage(@RequestBody HashMap<String, String> data, HttpSession httpSession) {
+        User user = userUtil.returnUser(httpSession.getAttribute("token").toString());
+        DeclinedFollow declinedFollow = null;
+        if (user != null) {
+            declinedFollow = declineMessageService.sendMessage(user, null, data.get("message"), Long.valueOf(data.get("cardId")));
+        }
+        return ((declinedFollow != null) ? "sent" : "failed");
     }
 }

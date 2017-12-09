@@ -45,6 +45,7 @@
             </ul>
         </div>
     </nav>
+    <div th:text="${lastpicked}" hidden="hidden" id="lastpicked"></div>
     <div class="row">
         <div class="col-md-12" id="dashboardMargin">
             <div class="col-lg-8 col-md-10 mx-auto" id="dashboardBody">
@@ -60,6 +61,9 @@
                     </div>
                     <!--<img class="card-img-bottom" th:src="${card.filePath}" alt="Card image cap" />-->
                 <!--<img class="card-img-bottom" src="#####">-->
+                </div>
+                <div class="col-md-12 row align-items-center justify-content-center">
+                    <div><a href="javascript: previousDashPage()">prev</a></div>&nbsp;&nbsp;<div><a href="javascript: nextDashPage()">next</a></div>
                 </div>
             </div>
         </div>

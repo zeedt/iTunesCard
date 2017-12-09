@@ -52,7 +52,7 @@ public class UserUtil {
     public User validateLogin(User user, Device device, HttpSession httpSession){
         User user1 = userRepositoy.findByUsernameAndRole(user.username,Role.USER);
         if(user1!=null){
-            user1.cards.forEach(card->card.user=null);
+            user1.cards.forEach(card->{card.user=null;card.cardgroup=null;card.declinedFollows=null;});
             if(Hash.checkPassword(user.password,user1.password)){
                 final UserDetails userDetails = userDetailsService.loadUserByUsername(user.username);
                 final String token = jwtTokenUtil.generateToken(userDetails, device);

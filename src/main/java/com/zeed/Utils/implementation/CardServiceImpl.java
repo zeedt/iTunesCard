@@ -1,5 +1,6 @@
-package com.zeed.Utils;
+package com.zeed.Utils.implementation;
 
+import com.zeed.Utils.services.CardService;
 import com.zeed.models.Cardgroup;
 import com.zeed.models.Cards;
 import com.zeed.models.Status;
@@ -7,13 +8,12 @@ import com.zeed.repository.CardsRepository;
 import com.zeed.repository.UserRepositoy;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
-import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * Created by longbridge on 11/22/17.
  */
 @Service
-public class CardServiceImpl implements CardService{
+public class CardServiceImpl implements CardService {
     @Autowired
     CardsRepository cardsRepository;
     @Autowired
@@ -89,6 +89,13 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
+    public List<Cards> CardsByStatusAndCount(Status status, Long id) {
+        List<Cards> cardsList = new ArrayList<>();
+        cardsList = cardsRepository.findCardsByStatusAndCount(new PageRequest(Math.toIntExact(id),2), status);
+        return cardsList;
+    }
+
+    @Override
     public void logSomething() {
         System.out.println("I am the log something service");
 
@@ -96,7 +103,7 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public List<Cards> getUpdateCards(Long last) {
-        List<Cards> cardsList = cardsRepository.findCardsByIdGreaterThan(last);
+        List<Cards> cardsList = cardsRepository.findCardsByIdGreaterThanAndStatus(last,Status.PENDING);
         return cardsList;
     }
 }

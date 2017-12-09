@@ -139,3 +139,65 @@ function getEnquiryDet(form) {
     })
 
 }
+function nextPage(){
+    var pPage = $("#lastpicked").html();
+    window.location.href = "/admindashboard?page="+(Number(pPage)+1);
+}
+function previousPage(){
+    var pPage = $("#lastpicked").html();
+    window.location.href = "/admindashboard?page="+(Number(pPage)-1);
+}
+function nextAdminVerPage(){
+    var pPage = $("#lastpicked").html();
+    window.location.href = "/adminverified?page="+(Number(pPage)+1);
+}
+function previousAdminVerPage(){
+    var pPage = $("#lastpicked").html();
+    window.location.href = "/adminverified?page="+(Number(pPage)-1);
+}
+function nextAdminDecPage(){
+    var pPage = $("#lastpicked").html();
+    window.location.href = "/adminDeclined?page="+(Number(pPage)+1);
+}
+function previousAdminDecPage(){
+    var pPage = $("#lastpicked").html();
+    window.location.href = "/adminDeclined?page="+(Number(pPage)-1);
+}
+
+function adminfollowCard(id,reason){
+    $("#followDeclinereas").html(reason);
+    $.ajax({
+        type:"POST",
+        url:"/fetchAdminNotificationPage",
+        data : JSON.stringify({cardId:id}),
+        contentType : "application/json; charset=utf-8",
+        async: false,
+        success : function(result){
+            console.log("success");
+            $("#followDeclinebody").html(result);
+            $("#followDeclineCardModal").modal('show');
+        },
+        error:function (err) {
+            console.log("Error occured "+err)
+        }
+    })
+}
+
+function sendAdminMessage(form) {
+    var formData = new FormData(form);
+    var cardId = $("#cardDet").html();
+    console.log("Card id " + cardId);
+    $.ajax({
+        type: "POST",
+        url: "/adminPostMessage",
+        data: JSON.stringify({message:$("#usermsg").val(),cardId:cardId}),
+        async: false,
+        contentType : "application/json; charset=utf-8",
+        success: function (result) {
+            console.log("REsult "+result);
+        },
+        error: function (error) {
+            console.log("Error "+JSON.stringify(error));
+        }
+    })
+}

@@ -163,5 +163,9 @@ function redirectToDashBoard(){
     window.location.href = "/dashboard";
 }
 function redirectToAdminDashBoard(){
-    window.location.href = "/admindashboard";
+    window.location.href = "/admindashboard?page=0";
 }
+
+
+
+

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.min.css" />
     <link rel="stylesheet" href="custom.css" />
     <script type="text/javascript" src="dashboardjs.js" />
+    <script type="text/javascript" src="admin.js" />
 
 </head>
 <body>
@@ -21,31 +22,28 @@
         <a class="navbar-brand" href="#">CardUpload</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li >
-                    <a class="nav-link" href="/">Dashboard</a>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admindashboard">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/uploadCard">Upload</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/verified">Verified</a>
+                    <a class="nav-link" href="/adminverified">Verified</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/declined">Declined<span class="sr-only">(current)</span></a>
-                <li class="nav-item">
-                    <a class="nav-link" href="/editProfile">Edit profile</a>
-                </li>
+                    <a class="nav-link" href="/adminDeclined">Declined<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Notification</a>
+                    <a class="nav-link" href="/userEnquiry">User enquiry</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/userlogout">Logout</a>
+                    <a class="nav-link" href="/adminlogout">Logout</a>
                 </li>
             </ul>
         </div>
     </nav>
+    <audio id="myaudio" src="hangouts_message.ogg" autostart="false" autoplay="false" ></audio>
     <div th:text="${lastpicked}" hidden="hidden" id="lastpicked"></div>
+    <div id="outerHold" style="visibility: hidden"><div id="lastFetched" th:text="${last}"></div></div>
+
     <div class="row">
         <div class="col-md-12" id="dashboardMargin">
             <div class="col-lg-8 col-md-10 mx-auto" id="dashboardBody">
@@ -59,19 +57,20 @@
                         <p class="card-text"><small class="text-muted" th:text="|DeclinedOn on ${card.verifiedOn}"></small>&nbsp;&nbsp;&nbsp;&nbsp;
                             <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : viewCard(\''+${card.filePath}+ '\');'" >View card</button></small>&nbsp;&nbsp;&nbsp;&nbsp;
                             <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : viewCardDecReason(\''+${card.declinedImage}+'\',\''+${card.comment}+ '\');'" >View decline reason</button></small></p>
-                        <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : followCard(\''+ ${card.id} +'\',\''+${card.comment} + '\');'" >Load card</button></small>
+                        <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : adminfollowCard(\''+ ${card.id} +'\',\''+${card.comment} + '\');'" >Load card</button></small>
 
                     </div>
                     <!--<img class="card-img-bottom" th:src="${card.filePath}" alt="Card image cap" />-->
                     <!--<img class="card-img-bottom" src="#####">-->
                 </div>
                 <div class="col-md-12 row align-items-center justify-content-center" th:if="${usercard.size()>0}">
-                    <div><a href="javascript: previousDecPage()">prev</a></div>&nbsp;&nbsp;<div><a href="javascript: nextDecPage()">next</a></div>
+                    <div><a href="javascript: previousAdminDecPage()">prev</a></div>&nbsp;&nbsp;<div><a href="javascript: nextAdminDecPage()">next</a></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="modal fade" id="viewCardModal">
     <div class="modal-dialog" role="document">

@@ -3,7 +3,8 @@
  */
 $(document).ready(function () {
     var fetching = false;
-   setInterval(function () {
+    // updateDashB();
+    setInterval(function () {
            updateDashB();
    },10000);
     function updateDashB() {

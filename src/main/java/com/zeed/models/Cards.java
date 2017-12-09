@@ -2,6 +2,7 @@ package com.zeed.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by longbridge on 11/22/17.
@@ -27,6 +28,8 @@ public class Cards {
     public Status status;
     @Lob
     public String declinedImage;
+    @OneToMany(mappedBy = "cards",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<DeclinedFollow> declinedFollows;
     public Cards(String description, String amount, String filePath, User user,Date uploadedOn,Date verifiedOn,Status status) {
         this.description = description;
         this.amount = amount;
