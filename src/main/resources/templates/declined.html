@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.min.css" />
     <link rel="stylesheet" href="custom.css" />
     <script type="text/javascript" src="dashboardjs.js" />
+    <script src="sockjs.min.js"></script>
+    <script src="stomp.min.js"></script>
+    <script src="websocket.js"></script>
 
 </head>
 <body>
@@ -46,6 +49,8 @@
         </div>
     </nav>
     <div th:text="${lastpicked}" hidden="hidden" id="lastpicked"></div>
+    <div id="roleHold" style="visibility: hidden"><div id="urole" th:text="${role}"></div></div>
+
     <div class="row">
         <div class="col-md-12" id="dashboardMargin">
             <div class="col-lg-8 col-md-10 mx-auto" id="dashboardBody">
@@ -59,7 +64,7 @@
                         <p class="card-text"><small class="text-muted" th:text="|DeclinedOn on ${card.verifiedOn}"></small>&nbsp;&nbsp;&nbsp;&nbsp;
                             <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : viewCard(\''+${card.filePath}+ '\');'" >View card</button></small>&nbsp;&nbsp;&nbsp;&nbsp;
                             <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : viewCardDecReason(\''+${card.declinedImage}+'\',\''+${card.comment}+ '\');'" >View decline reason</button></small></p>
-                        <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : followCard(\''+ ${card.id} +'\',\''+${card.comment} + '\');'" >Load card</button></small>
+                        <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : followCard(\''+ ${card.id} +'\',\''+${card.comment} + '\');'" >Message</button></small>
 
                     </div>
                     <!--<img class="card-img-bottom" th:src="${card.filePath}" alt="Card image cap" />-->
@@ -133,5 +138,12 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(
+        function(){
+            webconnect();
+        }
+    )
+</script>
 </body>
 </html>

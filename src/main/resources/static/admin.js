@@ -183,21 +183,52 @@ function adminfollowCard(id,reason){
     })
 }
 
-function sendAdminMessage(form) {
+function admnPostMessage() {
+    $("#sendMessageId").click();
+}
+
+function sendAdminMessagef(form) {
     var formData = new FormData(form);
     var cardId = $("#cardDet").html();
+    var message = $("#usermsg").val();
     console.log("Card id " + cardId);
     $.ajax({
         type: "POST",
         url: "/adminPostMessage",
-        data: JSON.stringify({message:$("#usermsg").val(),cardId:cardId}),
+        data: JSON.stringify({message:message,cardId:cardId}),
         async: false,
         contentType : "application/json; charset=utf-8",
         success: function (result) {
             console.log("REsult "+result);
+            dispatchMessage(message,cardId);
         },
         error: function (error) {
             console.log("Error "+JSON.stringify(error));
         }
     })
+}
+
+function sendAdminMessage(form) {
+    var formData = new FormData(form);
+    var cardId = $("#cardDet").html();
+    var message = $("#usermsg").val();
+    var role = $("#urole").val();
+    console.log("Card id " + cardId);
+    if(message!="" && message!=undefined) {
+        $.ajax({
+            type: "POST",
+            url: "/topic/zeed",
+            data: JSON.stringify({message: message, cardId: cardId, userRole: role}),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                console.log("REsult " + result);
+                dispatchMessage(message, cardId);
+                $("#usermsg").val("");
+            },
+            error: function (error) {
+                console.log("Error " + JSON.stringify(error));
+            }
+        })
+    }
 }
