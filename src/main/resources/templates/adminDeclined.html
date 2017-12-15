@@ -58,14 +58,13 @@
                         <h6 class="card-title">Card description
                             &nbsp;&nbsp;&nbsp;&nbsp;<small class="text-muted" th:text="|Amount : ${card.amount}"></small></h6>
                         <p class="card-text" th:text="${card.description}"></p>
-                        <p class="card-text"><small class="text-muted" th:text="|DeclinedOn on ${card.verifiedOn}"></small>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : viewCard(\''+${card.filePath}+ '\');'" >View card</button></small>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : viewCardDecReason(\''+${card.declinedImage}+'\',\''+${card.comment}+ '\');'" >View decline reason</button></small></p>
-                        <small class="text-muted"><button class="btn btn-md btn-info" th:onclick="'javascript : adminfollowCard(\''+ ${card.id} +'\',\''+${card.comment} + '\');'" >Message</button></small>
-
+                        <p class="card-text"><small class="text-muted" th:text="|DeclinedOn on ${card.verifiedOn}"></small>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <!--<div class="btn-group" role="group" aria-label="First group">-->
+                            <button class="btn btn-md btn-info" style="margin-top: 5px;" type="button" th:onclick="'javascript : viewCard(\''+${card.filePath}+ '\');'" >View card</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-md btn-info" style="margin-top: 5px;" type="button" th:onclick="'javascript : viewCardDecReason(\''+${card.declinedImage}+'\',\''+${card.comment}+ '\');'" >View decline reason</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-md btn-info"  style="margin-top: 5px;" type="button" th:onclick="'javascript : adminfollowCard(\''+ ${card.id} +'\',\''+${card.comment} + '\');'" >Message</button>
+                    <!--</div>-->
                     </div>
-                    <!--<img class="card-img-bottom" th:src="${card.filePath}" alt="Card image cap" />-->
-                    <!--<img class="card-img-bottom" src="#####">-->
                 </div>
                 <div class="col-md-12 row align-items-center justify-content-center" th:if="${usercard.size()>0}">
                     <div><a href="javascript: previousAdminDecPage()">prev</a></div>&nbsp;&nbsp;<div><a href="javascript: nextAdminDecPage()">next</a></div>

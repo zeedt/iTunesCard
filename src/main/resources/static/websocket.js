@@ -44,7 +44,7 @@ function showGreeting(message,cardId,role) {
         if(role==$("#urole").html()){
             $("#chatbox").append("<div class='col-md-12 text-right sender' style='float: right'>" + message + "</div>");
         }else{
-            $("#chatbox").append("<tr><td>" + message + "</td></tr>");
+            $("#chatbox").append("<div class='col-md-12 row receiverr'>" + message + "</div>");
         }
     }
     var objDiv = $("#chatbox");

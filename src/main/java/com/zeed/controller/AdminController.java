@@ -1,7 +1,7 @@
 package com.zeed.controller;
 
 import com.zeed.Utils.services.CardService;
-import com.zeed.Utils.UserUtil;
+import com.zeed.Utils.services.UserUtil;
 import com.zeed.Utils.services.DeclineMessageService;
 import com.zeed.models.Cards;
 import com.zeed.models.DeclinedFollow;
@@ -9,25 +9,15 @@ import com.zeed.models.Status;
 import com.zeed.models.User;
 import com.zeed.repository.CardsRepository;
 import com.zeed.repository.UserRepositoy;
-import com.zeed.websocket.ChatMessage;
-import com.zeed.websocket.Greeting;
-import com.zeed.websocket.HelloMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by longbridge on 11/23/17.

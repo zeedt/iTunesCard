@@ -1,7 +1,7 @@
 package com.zeed.controller.restcontroller;
 
 import com.zeed.Utils.services.CardService;
-import com.zeed.Utils.UserUtil;
+import com.zeed.Utils.services.UserUtil;
 import com.zeed.Utils.services.DeclineMessageService;
 import com.zeed.models.DeclinedFollow;
 import com.zeed.models.User;
@@ -104,7 +104,7 @@ public class AdminRestController {
     @RequestMapping(method=RequestMethod.POST, value = "/topic/zeed")
     public Object chatMessage(ChatMessage chatMessage, @RequestBody HashMap<String, String> data) throws Exception {
         HttpSession httpSession = null;
-        if(chatMessage==null) {
+        if(chatMessage.message==null && chatMessage.cardId==null && chatMessage.userRole==null) {
             try {
                 RequestAttributes requestAttributes = RequestContextHolder
                         .currentRequestAttributes();
@@ -125,7 +125,6 @@ public class AdminRestController {
         }else{
             Thread.sleep(500); // simulated delay
             ChatMessage chatMessage1 = new ChatMessage(chatMessage.message,chatMessage.cardId,chatMessage.userRole);
-            System.out.println("Chat message is "+chatMessage1);
             return chatMessage1;
         }
 

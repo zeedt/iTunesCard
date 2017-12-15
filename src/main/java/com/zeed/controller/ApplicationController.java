@@ -1,7 +1,7 @@
 package com.zeed.controller;
 
 import com.zeed.Utils.services.CardService;
-import com.zeed.Utils.UserUtil;
+import com.zeed.Utils.services.UserUtil;
 import com.zeed.models.Cards;
 import com.zeed.models.DeclinedFollow;
 import com.zeed.models.Status;
