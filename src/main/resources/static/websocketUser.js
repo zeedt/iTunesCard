@@ -1,4 +1,7 @@
 /**
+ * Created by longbridge on 12/17/17.
+ */
+/**
  * Created by longbridge on 12/11/17.
  */
 var stompClient = null;
@@ -19,15 +22,15 @@ function webconnect() {
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        setConnected(true);
-        stompClient.subscribe('/topic/zeed', function (greeting) {
-            showGreeting(JSON.parse(greeting.body).message,JSON.parse(greeting.body).cardId,JSON.parse(greeting.body).userRole);
-        });
-    },
+            setConnected(true);
+            stompClient.subscribe('/topic/zeed', function (greeting) {
+                showGreeting(JSON.parse(greeting.body).message,JSON.parse(greeting.body).cardId,JSON.parse(greeting.body).userRole);
+            });
+        },
         function(){
-        getMessages(cardId,"");
-        webconnect();
-    }
+            getCardMessages(cardId,"");
+            webconnect();
+        }
     );
 }
 
@@ -61,11 +64,10 @@ $(function () {
     $( "#disconnect" ).click(function() { disconnect(); });
 });
 
-function getMessages(id,reason){
-
+function getCardMessages(id,reason){
     $.ajax({
         type:"POST",
-        url:"/fetchAdminNotificationPage",
+        url:"/fetchNotificationPage",
         data : JSON.stringify({cardId:id}),
         contentType : "application/json; charset=utf-8",
         async: false,

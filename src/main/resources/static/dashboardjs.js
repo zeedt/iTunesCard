@@ -42,12 +42,10 @@ function followCard(id,reason){
         contentType : "application/json; charset=utf-8",
         async: false,
         success : function(result){
-            console.log("success");
             $("#followDeclinebody").html(result);
             $("#followDeclineCardModal").modal('show');
         },
         error:function (err) {
-            console.log("Error occured "+err)
         }
     })
 }
@@ -59,7 +57,6 @@ function sendMessage(form) {
     var formData = new FormData(form);
     var cardId = $("#cardDet").html();
     var message = $("#usermsg").val();
-    console.log("Card id " + cardId);
     if(message!="" && message!=undefined) {
         $.ajax({
             type: "POST",
@@ -68,12 +65,10 @@ function sendMessage(form) {
             async: false,
             contentType: "application/json; charset=utf-8",
             success: function (result) {
-                console.log("REsult " + result);
                 dispatchMessage(message, cardId);
                 $("#usermsg").val("");
             },
             error: function (error) {
-                console.log("Error " + JSON.stringify(error));
             }
         })
     }

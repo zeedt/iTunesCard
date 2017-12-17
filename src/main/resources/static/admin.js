@@ -20,7 +20,6 @@ function verifyCard(){
             }
         },
         error : function (error) {
-            console.log("Error");
         }
     })
 }
@@ -63,7 +62,6 @@ function declineform(form){
                 }
             },
             error: function (error) {
-                console.log("Error");
             }
         })
     }
@@ -89,12 +87,10 @@ function loadCard(user,id){
             }
         },
         error : function (error) {
-            console.log("Error");
         }
     })
 }
 function viewProfile(user,id){
-    console.log("User passed "+JSON.stringify(user));
     $.ajax({
         type: "POST",
         url:"/profileModal",
@@ -110,7 +106,6 @@ function viewProfile(user,id){
             }
         },
         error : function (error) {
-            console.log("Error");
         }
     })
 }
@@ -118,7 +113,6 @@ function makeEnquiry(){
     $("#getEnquiry").click();
 }
 function getEnquiryDet(form) {
-    console.log("form is "+JSON.stringify(form));
     $.ajax({
         type: "POST",
         url:"/getuserEnquiry",
@@ -134,7 +128,6 @@ function getEnquiryDet(form) {
         },
         error : function (error) {
             $("#userDetDiv").html("<p style='color: red'>Errror occured. Please contact admin</p>");
-            console.log("Error");
         }
     })
 
@@ -173,12 +166,10 @@ function adminfollowCard(id,reason){
         contentType : "application/json; charset=utf-8",
         async: false,
         success : function(result){
-            console.log("success");
             $("#followDeclinebody").html(result);
             $("#followDeclineCardModal").modal('show');
         },
         error:function (err) {
-            console.log("Error occured "+err)
         }
     })
 }
@@ -191,7 +182,6 @@ function sendAdminMessagef(form) {
     var formData = new FormData(form);
     var cardId = $("#cardDet").html();
     var message = $("#usermsg").val();
-    console.log("Card id " + cardId);
     $.ajax({
         type: "POST",
         url: "/adminPostMessage",
@@ -199,11 +189,9 @@ function sendAdminMessagef(form) {
         async: false,
         contentType : "application/json; charset=utf-8",
         success: function (result) {
-            console.log("REsult "+result);
             dispatchMessage(message,cardId);
         },
         error: function (error) {
-            console.log("Error "+JSON.stringify(error));
         }
     })
 }
@@ -213,7 +201,6 @@ function sendAdminMessage(form) {
     var cardId = $("#cardDet").html();
     var message = $("#usermsg").val();
     var role = $("#urole").val();
-    console.log("Card id " + cardId);
     if(message!="" && message!=undefined) {
         $.ajax({
             type: "POST",
@@ -222,12 +209,10 @@ function sendAdminMessage(form) {
             async: false,
             contentType: "application/json; charset=utf-8",
             success: function (result) {
-                console.log("REsult " + result);
                 dispatchMessage(message, cardId);
                 $("#usermsg").val("");
             },
             error: function (error) {
-                console.log("Error " + JSON.stringify(error));
             }
         })
     }

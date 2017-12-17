@@ -20,7 +20,6 @@ function validateUser(form){
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({username: form.username.value, password: form.password.value}),
             success: function (result) {
-                console.log("Result " + JSON.stringify(result));
                 if (result.message == "User found") {
                     redirectToDashBoard();
                 } else {
@@ -28,7 +27,6 @@ function validateUser(form){
                 }
             },
             error: function (error) {
-                console.log("Error");
             }
         })
     }
@@ -45,7 +43,6 @@ function validateAdminUser(form){
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({username: form.username.value, password: form.password.value}),
             success: function (result) {
-                console.log("Result " + JSON.stringify(result));
                 if (result.message == "User found") {
                     redirectToAdminDashBoard();
                 } else {
@@ -53,7 +50,6 @@ function validateAdminUser(form){
                 }
             },
             error: function (error) {
-                console.log("Error");
             }
         })
     }
@@ -124,15 +120,12 @@ function signUpUser(form){
             }),
             async: false,
             success: function (result) {
-                console.log("Result " + JSON.stringify(result));
-                console.log("Message is " + result.message);
                 if (result.message == "Registration successfull") {
                     document.getElementById("signupform").reset();
                 }
                 $("#message").html(result.message);
             },
             error: function (error) {
-                console.log("Error");
             }
         })
     }
@@ -146,15 +139,12 @@ function signAdminUpUser(form){
             firstName:form.firstname.value,lastName:form.lastname.value}),
         async:false,
         success : function (result) {
-            console.log("Result "+JSON.stringify(result));
-            console.log("Message is "+result.message);
             if (result.message=="Registration successfull"){
                 document.getElementById("signupform").reset();
             }
             $("#message").html(result.message);
         },
         error : function (error) {
-            console.log("Error");
         }
     })
 }

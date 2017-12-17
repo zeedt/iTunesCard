@@ -8,8 +8,6 @@ function callpasswordUpdate(){
     $("#passwordUpdateId").click();
 }
 function userUpdate(form) {
-    console.log("Called "+JSON.stringify(form));
-    console.log("Called "+JSON.stringify(form.accountNumber.value));
     var valid = true;
     if(form.bank.value.length<1){
         valid=false;$("#bankM").html("You must select a bank");
@@ -58,15 +56,11 @@ function userUpdate(form) {
             },
             error : function (error) {
                 $("#updateMessage").html("<p style='color: red'>Errror occured. Please contact admin</p>");
-                console.log("Error");
             }
         })
     }
 }
 function passwordUpdate(form) {
-    console.log("Called "+JSON.stringify(form));
-    console.log("Called "+JSON.stringify(form.oldpassword.value));
-    console.log("Called "+JSON.stringify(form.newpassword.value));
     var valid = true;
     if(form.oldpassword.value.length<8){
         valid=false;$("#oldM").html("password cannot be less than 8 characters");
@@ -94,7 +88,6 @@ function passwordUpdate(form) {
             },
             error : function (error) {
                 $("#updateMessage").html("<p style='color: red'>Errror occured. Please contact admin</p>");
-                console.log("Error");
             }
         })
     }
