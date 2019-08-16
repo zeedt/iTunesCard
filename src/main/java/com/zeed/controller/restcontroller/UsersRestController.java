@@ -2,7 +2,7 @@ package com.zeed.controller.restcontroller;
 
 import com.zeed.Utils.services.CardService;
 import com.zeed.Utils.Hash;
-import com.zeed.Utils.UserUtil;
+import com.zeed.Utils.services.UserUtil;
 import com.zeed.Utils.services.DeclineMessageService;
 import com.zeed.models.*;
 import com.zeed.repository.CardgroupRepository;

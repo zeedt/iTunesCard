@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.min.css" />
     <link rel="stylesheet" href="custom.css" />
     <script type="text/javascript" src="dashboardjs.js" />
+    <link href="main.css" rel="stylesheet" />
+
 </head>
 <body>
 
@@ -22,8 +24,12 @@
         </div>
         <div id="chatbox">
             <div th:each="message:${messages}">
-                <div th:text="${message.message}"></div>
-
+                <div th:if="${message.sentBy.role}==${role}">
+                    <div th:text="${message.message}" class="col-md-12 text-right sender"></div>
+                </div>
+                <div th:if="${message.sentBy.role}!=${role}">
+                    <div th:text="${message.message}" class="col-md-12 text-left receiverr"></div>
+                </div>
             </div>
         </div>
         <form name="message" method="post" action="javascript: postMessage()" class="input-group">

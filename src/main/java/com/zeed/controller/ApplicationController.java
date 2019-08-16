@@ -1,7 +1,7 @@
 package com.zeed.controller;
 
 import com.zeed.Utils.services.CardService;
-import com.zeed.Utils.UserUtil;
+import com.zeed.Utils.services.UserUtil;
 import com.zeed.models.Cards;
 import com.zeed.models.DeclinedFollow;
 import com.zeed.models.Status;
@@ -248,16 +248,24 @@ public class ApplicationController {
         }
         String resp = userUtil.checkIfUserInSession(token);
         if(resp.equals("dashboard")){
+            User user = userUtil.returnUser(token);
             List<DeclinedFollow> declinedFollows = new ArrayList<>();
             Cards cards = cardsRepository.findCardsById(Long.valueOf(data.get("cardId")));
             declinedFollows = (cards!=null) ? cards.declinedFollows : declinedFollows;
             Collections.sort(declinedFollows,(d1, d2)->d1.id.compareTo(d2.id));
             modelAndView.addObject("cardId",data.get("cardId"));
             modelAndView.addObject("messages",declinedFollows);
+            modelAndView.addObject("role",user.role);
             modelAndView.addObject("lastCardMId",(declinedFollows.size()>0) ? declinedFollows.get(declinedFollows.size()-1) : 0);
             modelAndView.setViewName("messageBox");
         }else{
         }
             return modelAndView;
+        }
+
+        @RequestMapping(method = RequestMethod.GET,value = "/indexx")
+        public String res(){
+
+            return "index";
         }
 }
