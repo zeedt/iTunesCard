@@ -1,17 +1,21 @@
 package com.zeed.controller.restcontroller;
 
 import com.zeed.Utils.services.CardService;
-import com.zeed.Utils.UserUtil;
+import com.zeed.Utils.services.UserUtil;
 import com.zeed.Utils.services.DeclineMessageService;
 import com.zeed.models.DeclinedFollow;
 import com.zeed.models.User;
+import com.zeed.websocket.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
@@ -93,5 +97,36 @@ public class AdminRestController {
             declinedFollow = declineMessageService.sendMessage(user, null, data.get("message"), Long.valueOf(data.get("cardId")));
         }
         return ((declinedFollow != null) ? "sent" : "failed");
+    }
+
+    @MessageMapping("/sendMessage")
+    @SendTo("/topic/zeed")
+    @RequestMapping(method=RequestMethod.POST, value = "/topic/zeed")
+    public Object chatMessage(ChatMessage chatMessage, @RequestBody HashMap<String, String> data) throws Exception {
+        HttpSession httpSession = null;
+        if(chatMessage.message==null && chatMessage.cardId==null && chatMessage.userRole==null) {
+            try {
+                RequestAttributes requestAttributes = RequestContextHolder
+                        .currentRequestAttributes();
+                ServletRequestAttributes attributes = (ServletRequestAttributes) requestAttributes;
+                HttpServletRequest request = attributes.getRequest();
+                httpSession = request.getSession(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if(chatMessage.message==null && httpSession!=null){
+            User user = userUtil.returnUser(httpSession.getAttribute("admintoken").toString());
+            DeclinedFollow declinedFollow = null;
+            if (user != null) {
+                declinedFollow = declineMessageService.sendMessage(user, null, data.get("message"), Long.valueOf(data.get("cardId")));
+            }
+            return ((declinedFollow != null) ? "sent" : "failed");
+        }else{
+            Thread.sleep(500); // simulated delay
+            ChatMessage chatMessage1 = new ChatMessage(chatMessage.message,chatMessage.cardId,chatMessage.userRole);
+            return chatMessage1;
+        }
+
     }
 }

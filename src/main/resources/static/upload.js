@@ -40,7 +40,6 @@ function uploadform(form) {
                 }
             },
             error: function (error) {
-                console.log("Error");
             }
         })
     }

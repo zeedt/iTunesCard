@@ -1,7 +1,8 @@
 package com.zeed.controller;
 
 import com.zeed.Utils.services.CardService;
-import com.zeed.Utils.UserUtil;
+import com.zeed.Utils.services.UserUtil;
+import com.zeed.Utils.services.DeclineMessageService;
 import com.zeed.models.Cards;
 import com.zeed.models.DeclinedFollow;
 import com.zeed.models.Status;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by longbridge on 11/23/17.
@@ -34,6 +34,8 @@ public class AdminController {
     UserRepositoy userRepositoy;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    DeclineMessageService declineMessageService;
 
     @RequestMapping(method = RequestMethod.GET, value="/adminHome")
     public String home(HttpSession httpSession, Model model){
@@ -298,6 +300,7 @@ public class AdminController {
             token = httpSession.getAttribute("admintoken").toString();
         }
         String resp = userUtil.checkIfAdminUserInSession(token);
+        User user = userUtil.returnAdminUser(token);
         if(resp.equals("admindashboard")){
             List<DeclinedFollow> declinedFollows = new ArrayList<>();
             Cards cards = cardsRepository.findCardsById(Long.valueOf(data.get("cardId")));
@@ -305,10 +308,29 @@ public class AdminController {
             modelAndView.addObject("cardId",data.get("cardId"));
             Collections.sort(declinedFollows,(d1,d2)->d1.id.compareTo(d2.id));
             modelAndView.addObject("messages",declinedFollows);
+            modelAndView.addObject("role",user.role);
             modelAndView.addObject("lastCardMId",(declinedFollows.size()>0) ? declinedFollows.get(declinedFollows.size()-1).id : 0);
             modelAndView.setViewName("adminMessageBox");
         }else{
         }
         return modelAndView;
     }
+
+//    @MessageMapping("/sendMessage")
+//    @SendTo("/topic/zeed")
+//    @RequestMapping(method=RequestMethod.GET, value = "/topic/zeed")
+//    public Object greeting(ChatMessage chatMessage,HttpSession httpSession) throws Exception {
+//        String token = "";
+//        if (httpSession.getAttribute("admintoken")!=null) {
+//            token = httpSession.getAttribute("admintoken").toString();
+//        }
+//        System.out.println("Token is "+token);
+//        Thread.sleep(500); // simulated delay
+//        ChatMessage chatMessage1 = new ChatMessage(chatMessage.message,chatMessage.cardId,"ADMIN");
+//        System.out.println("Chat message is "+chatMessage1);
+//        return chatMessage1;
+//    }
+
+
+
 }
